@@ -105,9 +105,9 @@ def load_tags():
             for collection in all_info:
                 category = collection.get("term")
 
-            tag = Tag(category=category)
+                tag = Tag(category=category)
 
-            db.session.add(tag)
+                db.session.add(tag)
 
     db.session.commit()
 
