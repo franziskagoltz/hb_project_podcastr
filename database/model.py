@@ -31,22 +31,39 @@ class User(db.Model):
             self.user_id, self.email, self.password, self.zipcode)
 
 
+class Channel(db.Model):
+    """Podcast Channel details for PodcastRadio website"""
+
+    __tablename__ = "channels"
+
+    channel_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    channel_name = db.Column(db.String(200), unique=True, nullable=False)
+    channel_author = db.Column(db.String(200), nullable=True)
+    channel_summary = db.Column(db.String, nullable=True)
+
+    tags = db.relationship("Tag", secondary="tags_channels_link", backref="channels")
+
+    def __repr__(self):
+        return "channel id={} name={}".format(
+            self.channel_id, self.channel_name)
+
+
 class Podcast(db.Model):
     """ Podcast details for PodcastRadio website"""
 
     __tablename__ = "podcasts"
 
     podcast_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    channel_id = db.Column(db.Integer, db.ForeignKey("channels.channel_id"), nullable=False)
     author = db.Column(db.String(500), nullable=True)
     title = db.Column(db.String(500), nullable=False)
     released_at = db.Column(db.DateTime, nullable=True)
     podcast_url = db.Column(db.String(500), nullable=True)
     play_url = db.Column(db.String(500), nullable=False)
-    summary = db.Column(db.String, nullable=True) #check for type text
+    summary = db.Column(db.String, nullable=True)
+    #check for type text
     image_url = db.Column(db.String(500), nullable=True)
     podcast_duration = db.Column(db.Integer, nullable=True)
-
-    tags = db.relationship("Tag", secondary="tags_podcasts_link", backref="podcasts")
 
     # create DB command: createdb -E UTF8 -T template0 --locale=en_US.utf8 databasename
 
@@ -68,18 +85,19 @@ class Tag(db.Model):
             self.tag_id, self.category)
 
 
-class TagPodcast(db.Model):
+class TagChannel(db.Model):
     """ Association table between Tag and Podcast class """
 
-    __tablename__ = "tags_podcasts_link"
+    __tablename__ = "tags_channels_link"
 
     tp_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"), nullable=False)
-    podcast_id = db.Column(db.Integer, db.ForeignKey("podcasts.podcast_id"), nullable=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey("channels.channel_id"), nullable=False)
+    # channel id
 
     def __repr__(self):
         return "SPK= {} Tag id={} podcast_id={}".format(
-            self.tp_id, self.tag_id, self.podcast_id)
+            self.tp_id, self.tag_id, self.channel_id)
 
 
 class ListeningHistory(db.Model):

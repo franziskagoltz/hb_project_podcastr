@@ -1,11 +1,7 @@
 """Utility file to seed PodcastRadio database from rss_parse data"""
 
 from sqlalchemy import func
-from model import ListeningHistory
-from model import User
-from model import Tag
-from model import Podcast
-from model import TagPodcast
+from model import User, ListeningHistory, Tag, Podcast, TagChannel, Channel
 # import re
 from time import mktime
 from datetime import datetime
@@ -16,6 +12,27 @@ from flask import Flask
 from rss_parse import rss_feeds
 
 app = Flask(__name__)
+
+
+def load_channels():
+    """loads podcast channels into database"""
+
+    print "Channels"
+
+    Channel.query.delete()
+
+    for channel in rss_feeds:
+        channel_author = channel["feed"].get("author")
+        channel_name = channel["feed"].get("title")
+        channel_summary = channel["feed"].get("summary")
+
+        channel = Channel(channel_author=channel_author,
+                          channel_name=channel_name,
+                          channel_summary=channel_summary,)
+
+        db.session.add(channel)
+
+    db.session.commit()
 
 
 def load_podcasts():
@@ -30,6 +47,10 @@ def load_podcasts():
     # rss_feeds = open(data.txt)
 
     for channel in rss_feeds:
+
+        channel_name = channel["feed"].get("title")
+
+        channel_id = Channel.query.filter_by(channel_name=channel_name).one().channel_id
 
         for podcast in channel["items"]:
             # iterating through keys in items dict
@@ -73,7 +94,8 @@ def load_podcasts():
                         # checking for type of link so we get the correct url
                         play_url = link.get("href")
 
-            podcast = Podcast(author=author,
+            podcast = Podcast(channel_id=channel_id,
+                              author=author,
                               title=title,
                               podcast_url=podcast_url,
                               play_url=play_url,
@@ -102,12 +124,46 @@ def load_tags():
         all_info = channel["feed"].get("tags")
 
         if all_info:
+
+            #  if tag.query exists : skip, else add
+
             for collection in all_info:
                 category = collection.get("term")
 
-                tag = Tag(category=category)
+                # checking if the tag is already existent in the db. if so, skip, if not, add
 
-                db.session.add(tag)
+                categories_in_db = Tag.query.filter(Tag.category == category).all()
+
+                if categories_in_db == []:
+
+                    tag = Tag(category=category)
+
+                    db.session.add(tag)
+
+    db.session.commit()
+
+
+def load_tag_channel_links():
+    """populate association table"""
+
+    for channel in rss_feeds:
+
+        channel_name = channel["feed"].get("title")
+
+        channel_id = Channel.query.filter_by(channel_name=channel_name).one().channel_id
+
+        all_tags = channel["feed"].get("tags")
+
+        if all_tags:
+
+            for collection in all_tags:
+                category = collection.get("term")
+
+                tag_id = Tag.query.filter_by(category=category).one().tag_id
+
+                tagchannel = TagChannel(channel_id=channel_id, tag_id=tag_id)
+
+                db.session.add(tagchannel)
 
     db.session.commit()
 
@@ -121,5 +177,7 @@ if __name__ == "__main__":
     db.create_all()
 
     # Import data to podtcastradio db
+    load_channels()
     load_podcasts()
     load_tags()
+    load_tag_channel_links()

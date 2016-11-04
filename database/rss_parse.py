@@ -5,7 +5,8 @@
 import feedparser
 
 
-# planet_money = feedparser.parse("planet_money.xml") #local file to speed up inserting data while testing
+# planet_money = feedparser.parse("planet_money.xml") 
+#local file to speed up inserting data while testing
 planet_money = feedparser.parse("http://www.npr.org/rss/podcast.php?id=510289")
 freakonomics = feedparser.parse("http://feeds.feedburner.com/freakonomicsradio")
 this_american_life = feedparser.parse("http://feed.thisamericanlife.org/talpodcast")
