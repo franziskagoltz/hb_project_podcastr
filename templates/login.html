@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Login to listen to ALL the podcasts!</h1>
+
+<form action="/login" method="POST">
+  <label>Email address: </label><input type="text" name="email_address"><br>
+  <label>Password: </label><input type="password" name="password"><br>
+  <br>
+  <input type="submit" value="Log me in!">
+</form>
+
+
+{% endblock %}

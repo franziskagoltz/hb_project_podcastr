@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Sign up to listen to ALL the podcasts!</h1>
+
+<form action="/signup" method="POST">
+  <label>Name: </label><input type="test" name="name"><br>
+  <label>Email address: </label><input type="text" name="email_address"><br>
+  <label>Password: </label><input type="password" name="password"><br>
+  <label>Age: </label><input type="number" name="age"><br>
+  <label>Gender: </label>Female <input type="radio" name="sex" value="female">
+  Male <input type="radio" name="sex" value="male">
+  <br>
+  <label>Zipcode: </label><input type="text" name="zipcode"><br>
+  <br><br>
+  <input type="submit" value="Sign me up!">
+
+</form>
+
+
+{% endblock %}

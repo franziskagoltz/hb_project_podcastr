@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>
+        {% block title %}
+            Podcast Radio
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

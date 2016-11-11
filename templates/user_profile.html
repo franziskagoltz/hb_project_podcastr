@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>User Profile</h2>
+
+<label>Name: {{ user.name }}</label><br>
+<label>Email: {{ user.email }}</label><br>
+<label>Age: {{ user.age }}</label><br>
+
+<button id="listen"><a href="/podcasts">Listen Now!</a></button>
+{% endblock %}
