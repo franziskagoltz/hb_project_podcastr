@@ -13,6 +13,8 @@ from model import connect_to_db, db, Podcast, Tag, TagChannel, User, ListeningHi
 
 from datetime import datetime
 
+import server_functions
+
 
 app = Flask(__name__)
 
@@ -42,25 +44,11 @@ def sign_up():
 
 @app.route("/signup", methods=["POST"])
 def confirm_signup():
-    """Confirms user sign-up"""
+    """Signs user up"""
 
-    name = request.form.get("name")
-    email = request.form.get("email_address")
-    password = request.form.get("password")
-    age = int(request.form.get("age"))
-    sex = request.form.get("sex")
-    zipcode = request.form.get("zipcode")
+    user_info = request.form
 
-    user = User(name=name, email=email, password=password,
-                age=age, sex=sex, zipcode=zipcode)
-
-    db.session.add(user)
-
-    db.session.commit()
-
-# experiment with **kwargs
-
-    session["user_id"] = user.user_id
+    server_functions.add_user(user_info)
 
     flash("You are now signed up!")
 
@@ -82,7 +70,7 @@ def validate_login():
     password = request.form.get("password")
 
     try:
-        current_user = User.query.filter(User.email == email, User.password == password).one()
+        current_user = server_functions.get_current_user(email, password)
         flash("You are now logged in!")
         session["user_id"] = current_user.user_id
 
@@ -109,7 +97,7 @@ def user_profile():
 
     user_id = session["user_id"]
 
-    user = User.query.get(user_id)
+    user = server_functions.get_user(user_id)
 
     return render_template("/user_profile.html", user=user)
 
@@ -125,15 +113,10 @@ def show_podcasts():
 def record_podcast():
     """records the podcast the user listens to"""
 
-    podcast_id = int(request.form.get("data"))
     user_id = session["user_id"]
-    listened_at = datetime.now()
+    podcast_id = int(request.form.get("data"))
 
-    history = ListeningHistory(podcast_id=podcast_id, user_id=user_id, listened_at=listened_at)
-
-    db.session.add(history)
-
-    db.session.commit()
+    server_functions.record_history(user_id, podcast_id)
 
     return jsonify({"status": "Success!"})
 
@@ -145,41 +128,11 @@ def get_podcasts():
     category = str(request.args.get("category"))
     offset = int(request.args.get("offset"))
 
-    # get tag ID for category selected
-    search_term = "%{}%".format(category)
-    tag_ids = Tag.query.filter(Tag.category.like(search_term)).all()
+    tag_ids = server_functions.get_tag_ids(category)
 
-    all_channels = []
+    channel_ids = server_functions.get_channel_ids(tag_ids)
 
-    for tag in tag_ids:
-
-        all_channels.extend(tag.channels)
-
-    # get associated channels:
-    channel_ids = [channel.channel_id for channel in all_channels]
-
-    all_podcasts = []
-
-    all_episodes = Podcast.query.filter(Podcast.channel_id.in_(channel_ids))
-    newest_first = all_episodes.order_by(desc(Podcast.released_at))
-    two_newest_from_offset = newest_first.limit(2).offset(offset).all()
-
-    for episode in two_newest_from_offset:
-        podcast = {}
-
-        # populating the dictionary
-        podcast["podcast_id"] = episode.podcast_id
-        podcast["play_url"] = episode.play_url
-        podcast["title"] = episode.title
-        podcast["author"] = episode.author
-
-        # appending the podcast dict to our list of dicts
-        all_podcasts.append(podcast)
-
-    # creating a dict to pass to frontend via jsonify
-    json_dict = {"data": all_podcasts}
-
-    return jsonify(json_dict)
+    return server_functions.get_podcasts(channel_ids, offset)
 
 
 if __name__ == "__main__":

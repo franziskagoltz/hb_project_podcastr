@@ -67,9 +67,7 @@ function playNextPodcast() {
 $("#player").on("ended", function() {
 
     // send the id of the episode to the server
-    $.post("/record", {"data": episode.podcast_id}, function(status) {
-        console.log(status);
-    });
+    $.post("/record", {"data": episode.podcast_id});
     // check queue and play new podcast
     checkQueue();
     // playNextPodcast();
