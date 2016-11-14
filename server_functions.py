@@ -106,3 +106,15 @@ def record_history(user_id, podcast_id):
     db.session.add(history)
 
     db.session.commit()
+
+
+def get_history(user_id):
+    """Gets the listening history of a user, limit by 10"""
+
+    all_history = ListeningHistory.query.filter(ListeningHistory.user_id == user_id)
+
+    recent_first = all_history.order_by(desc(ListeningHistory.listened_at))
+
+    last_10 = recent_first.limit(10).all()
+
+    return last_10

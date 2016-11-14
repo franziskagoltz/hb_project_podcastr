@@ -8,5 +8,26 @@
 <label>Email: {{ user.email }}</label><br>
 <label>Age: {{ user.age }}</label><br>
 
+<br>
+
 <button id="listen"><a href="/podcasts">Listen Now!</a></button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+<!--       <th>Channel ID</th>  -->
+      <th>Podcast ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in history %}
+    <tr>
+      <td>{{ record.listened_at.strftime('%Y-%m-%d at %I:%M:%S') }}</td>
+      <td>{{ record.podcast_id }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

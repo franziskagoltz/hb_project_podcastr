@@ -99,7 +99,9 @@ def user_profile():
 
     user = server_functions.get_user(user_id)
 
-    return render_template("/user_profile.html", user=user)
+    history = server_functions.get_history(user_id)
+
+    return render_template("/user_profile.html", user=user, history=history)
 
 
 @app.route("/podcasts")
