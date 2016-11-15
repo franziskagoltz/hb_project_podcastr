@@ -142,7 +142,7 @@ if __name__ == "__main__":
     # point that we invoke the DebugToolbarExtension
     app.debug = True
 
-    connect_to_db(app)
+    connect_to_db(app, "postgresql:///podcastradio")
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
