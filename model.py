@@ -122,11 +122,11 @@ class ListeningHistory(db.Model):
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
+def connect_to_db(app, database_uri):
     """Connect the database to our Flask app."""
 
     # Configure to use PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///podcastradio'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     db.app = app
     db.init_app(app)
 
@@ -135,5 +135,5 @@ if __name__ == "__main__":
     # running when file gets called directly
 
     from server import app
-    connect_to_db(app)
+    connect_to_db(app, "postgresql:///podcastradio")
     print "Connected to DB."

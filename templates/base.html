@@ -12,6 +12,15 @@
 <body>
     <script src="https://code.jquery.com/jquery.js"></script>
 
+    {% if 'user_id' in session %} 
+        <button id="logout"><a href="/logout">Logout</a></button>
+        <button id="user_profile"><a href="/userprofile">User Profile</a></button>
+    {% else %}
+        <button id="login"><a href="/login">Login</a></button>
+        <button id="sign_up"><a href="/signup">Sign Up</a></button>
+    {% endif %}
+
+
     {% for message in get_flashed_messages() %}
         {{ message }}
     {% endfor %}
