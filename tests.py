@@ -67,6 +67,13 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get("/userprofile")
         self.assertIn("User Profile", result.data)
 
+    def test_logged_in(self):
+        """Test if correct display of buttons on landing page"""
+
+        result = self.client.get("/")
+        self.assertIn("Logout", result.data)
+        self.assertNotIn("Login", result.data)
+
 
 class FlaskTestsDatabase(TestCase):
     """Flask tests that use the database."""
@@ -137,6 +144,16 @@ class FlaskTestsDatabase(TestCase):
         channel_ids = [channel.channel_id for channel in channel_ids_objects]
 
         self.assertEqual(channel_ids[0], 1)
+
+    def test_get_user(self):
+        """Test get user info to display on user profile page"""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = 1
+
+        result = self.client.get("/userprofile")
+        self.assertIn("Jane", result.data)
 
 
 def example_data():
