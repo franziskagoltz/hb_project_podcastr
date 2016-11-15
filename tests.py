@@ -51,15 +51,15 @@ class FlaskTestsLoggedIn(TestCase):
     def setUp(self):
         """Stuff to do before every test."""
 
-        app.config['TESTING'] = True
-        app.config['SECRET_KEY'] = 'key'
+        app.config["TESTING"] = True
+        app.config["SECRET_KEY"] = "key"
         self.client = app.test_client()
 
         connect_to_db(app, "postgresql:///podcastradio")
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess['user_id'] = 1
+                sess["user_id"] = 1
 
     def test_userprofile_page(self):
         """Test user profile page."""
@@ -83,7 +83,7 @@ class FlaskTestsDatabase(TestCase):
 
         # Get the Flask test client
         self.client = app.test_client()
-        app.config['TESTING'] = True
+        app.config["TESTING"] = True
 
         # Connect to test database
         connect_to_db(app, "postgresql:///testdb")
@@ -150,10 +150,26 @@ class FlaskTestsDatabase(TestCase):
 
         with self.client as c:
             with c.session_transaction() as sess:
-                sess['user_id'] = 1
+                sess["user_id"] = 1
 
         result = self.client.get("/userprofile")
         self.assertIn("Jane", result.data)
+
+
+class FlaskTestsLoggedOut(TestCase):
+    """Flask tests with user logged out of session."""
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        app.config["TESTING"] = True
+        self.client = app.test_client()
+
+    def test_userprofile_page(self):
+        """Test that user can't see userprofile page when logged out."""
+
+        result = self.client.get("/userprofile", follow_redirects=True)
+        self.assertIn("You must be logged in", result.data)
 
 
 def example_data():

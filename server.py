@@ -88,20 +88,25 @@ def logout():
     session.clear()
     flash("You are now logged out!")
 
-    return redirect('/')
+    return redirect("/")
 
 
 @app.route("/userprofile")
 def user_profile():
     """displays user info stored in profile"""
 
-    user_id = session["user_id"]
+    user_id = session.get("user_id")
 
-    user = server_functions.get_user(user_id)
+    if user_id:
 
-    history = server_functions.get_history(user_id)
+        user = server_functions.get_user(user_id)
 
-    return render_template("/user_profile.html", user=user, history=history)
+        history = server_functions.get_history(user_id)
+
+        return render_template("/user_profile.html", user=user, history=history)
+    else:
+        flash("You must be logged in to see your profile.")
+        return redirect("/")
 
 
 @app.route("/podcasts")
