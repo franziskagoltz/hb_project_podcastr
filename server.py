@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from sqlalchemy import desc
 from sqlalchemy.orm.exc import NoResultFound
 
-from flask import Flask, jsonify, render_template, redirect, request, flash, session
+from flask import Flask, jsonify, render_template, redirect, request, flash, session, g
 
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -26,6 +26,13 @@ app.secret_key = "ABC"
 # error.
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
+
+# testing mode false unless specified when the server is run
+JS_TESTING_MODE = False
+
+@app.before_request
+def add_tests():
+    g.jasmine_tests = JS_TESTING_MODE
 
 
 @app.route("/")
@@ -151,5 +158,10 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
+
+    import sys
+    if sys.argv[-1] == "jstest":
+        JS_TESTING_MODE = True
+
 
     app.run(host="0.0.0.0")

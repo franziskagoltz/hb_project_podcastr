@@ -27,6 +27,20 @@
 
     {% block content %}
     {% endblock %}
+
+    {% if g.jasmine_tests %}
+        <!-- stuff for testing -->
+        <link rel="stylesheet" href="/static/js_test/jasmine.min.css">
+        <script src="/static/js_test/jasmine.min.js"></script>
+        <script src="/static/js_test/jasmine-html.min.js"></script>
+        <script src="/static/js_test/boot.min.js"></script>
+        <!-- end of stuff for testing -->
+    {% endif %}
+
+    {% block js_tests %}
+    {% endblock %}
+
 </body>
+
 
 </html>
