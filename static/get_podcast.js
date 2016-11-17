@@ -1,9 +1,10 @@
 "use strict";
 
 // keepping track of global data
-var data = {"queue": null,
+var jsData = {"queue": null,
         "offset": 0,
         "globalVarCategory": null,
+        "episode": null,
         };
 
 // grabbing podcasts from the databse based on what category is selected and 
@@ -13,14 +14,14 @@ function getPodcasts(offset, category) {
     console.log(category);
 
     // querying the database and grabbing two podcasts from the specified category
-    $.get("/get-content.json", {"offset": data.offset, "category": data.globalVarCategory}, function(results) {
+    $.get("/get-content.json", {"offset": jsData.offset, "category": jsData.globalVarCategory}, function(results) {
 
         // grabbing the data we returned from the server side
         var episodes = results["data"];
 
         // add episodes to the queue
         for (var i = 0; i < episodes.length; i++) {
-            data.queue.push(episodes[i]);
+            jsData.queue.push(episodes[i]);
         }
 
         // play podcast
@@ -32,9 +33,9 @@ function getPodcasts(offset, category) {
 function checkQueue(category) {
 
     // if queue is low, repopulate
-    if (data.queue.length <= 1) {
-        data.offset += 2;
-        getPodcasts(data.offset, data.globalVarCategory);
+    if (jsData.queue.length <= 1) {
+        jsData.offset += 2;
+        getPodcasts(jsData.offset, jsData.globalVarCategory);
     }
     // otherwise play next podcast
     else {
@@ -42,18 +43,15 @@ function checkQueue(category) {
     }
 }
 
-// setting a golabl variable because we need access to it from a event handler
-var episode;
-
 // playing the next podcast in the queue
 function playNextPodcast() {
 
     // grabbing an episode from the queue
-    episode = data.queue.shift();
+    jsData.episode = jsData.queue.shift();
 
-    var url = episode.play_url;
-    var title = episode.title;
-    var author = episode.author;
+    var url = jsData.episode.play_url;
+    var title = jsData.episode.title;
+    var author = jsData.episode.author;
 
     // updating the values in the html with details from the current episode
     $("#player").attr("src", url);
@@ -63,13 +61,13 @@ function playNextPodcast() {
 
 // start playing a podcast from a new category
 function playNewCategory(category) {
-    data.globalVarCategory = category;
-    console.log(data.globalVarCategory);
+    jsData.globalVarCategory = category;
+    console.log(jsData.globalVarCategory);
 
-    data.queue = [];
-    data.offset = 0;
+    jsData.queue = [];
+    jsData.offset = 0;
     console.log("setting queue to empty");
-    getPodcasts(data.offset, data.globalVarCategory);
+    getPodcasts(jsData.offset, jsData.globalVarCategory);
 }
 
 // eventhandler on finishing an episode
@@ -78,8 +76,7 @@ $("#player").on("ended", function() {
     // send the id of the episode to the server
     $.post("/record", {"data": episode.podcast_id});
     // check queue and play new podcast
-    checkQueue(data["globalVarCategory"]);
-    // playNextPodcast();
+    checkQueue(jsData["globalVarCategory"]);
 });
 
 
@@ -87,7 +84,7 @@ $("#player").on("ended", function() {
 $("#skip").on("click", function() {
     console.log("skipping");
     $.post("/record", {"data": episode.podcast_id});
-    checkQueue(data.globalVarCategory);
+    checkQueue(jsData.globalVarCategory);
 });
 
 
