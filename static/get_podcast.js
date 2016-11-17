@@ -83,6 +83,13 @@ $("#category").on("click", function() {
     getPodcasts(offset);
 });
 
+// eventhandler on skip
+$("#skip").on("click", function() {
+    console.log("skipping");
+    $.post("/record", {"data": episode.podcast_id});
+    checkQueue();
+});
+
 
 
 // OLD COMMENTS/TRIES
