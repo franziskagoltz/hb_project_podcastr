@@ -1,40 +1,40 @@
 "use strict";
 
-// list of objects to be played next
-var queue = [];
-
-// offset for db query
-var offset = 0;
+// keepping track of global data
+var data = {"queue": null,
+        "offset": 0,
+        "globalVarCategory": null,
+        };
 
 // grabbing podcasts from the databse based on what category is selected and 
 // populating the queue
-function getPodcasts(offset) {
+function getPodcasts(offset, category) {
 
-    var category = $("#category").val();
+    console.log(category);
 
     // querying the database and grabbing two podcasts from the specified category
-    $.get("/get-content.json", {"offset": offset, "category": category}, function(results) {
+    $.get("/get-content.json", {"offset": data.offset, "category": data.globalVarCategory}, function(results) {
 
         // grabbing the data we returned from the server side
         var episodes = results["data"];
 
         // add episodes to the queue
         for (var i = 0; i < episodes.length; i++) {
-            queue.push(episodes[i]);
+            data.queue.push(episodes[i]);
         }
 
-        // play podcsat
+        // play podcast
         playNextPodcast();
     });
 }
 
 // checking the length of the queue after every podcast played
-function checkQueue() {
+function checkQueue(category) {
 
     // if queue is low, repopulate
-    if (queue.length <= 1) {
-        offset += 2;
-        getPodcasts(offset);
+    if (data.queue.length <= 1) {
+        data.offset += 2;
+        getPodcasts(data.offset, data.globalVarCategory);
     }
     // otherwise play next podcast
     else {
@@ -44,13 +44,12 @@ function checkQueue() {
 
 // setting a golabl variable because we need access to it from a event handler
 var episode;
-// console.log(episode);
 
 // playing the next podcast in the queue
 function playNextPodcast() {
 
     // grabbing an episode from the queue
-    episode = queue.shift();
+    episode = data.queue.shift();
 
     var url = episode.play_url;
     var title = episode.title;
@@ -62,6 +61,16 @@ function playNextPodcast() {
     $("#station").html(author);
 }
 
+// start playing a podcast from a new category
+function playNewCategory(category) {
+    data.globalVarCategory = category;
+    console.log(data.globalVarCategory);
+
+    data.queue = [];
+    data.offset = 0;
+    console.log("setting queue to empty");
+    getPodcasts(data.offset, data.globalVarCategory);
+}
 
 // eventhandler on finishing an episode
 $("#player").on("ended", function() {
@@ -69,25 +78,16 @@ $("#player").on("ended", function() {
     // send the id of the episode to the server
     $.post("/record", {"data": episode.podcast_id});
     // check queue and play new podcast
-    checkQueue();
+    checkQueue(data["globalVarCategory"]);
     // playNextPodcast();
 });
 
-// eventhandler on category change
-$("#category").on("click", function() {
-    console.log("setting queue to empty");
-    // emptying the queue and resetting the offset
-    queue = [];
-    offset = 0;
-    // grab new podcasts and play the first one
-    getPodcasts(offset);
-});
 
 // eventhandler on skip
 $("#skip").on("click", function() {
     console.log("skipping");
     $.post("/record", {"data": episode.podcast_id});
-    checkQueue();
+    checkQueue(data.globalVarCategory);
 });
 
 
