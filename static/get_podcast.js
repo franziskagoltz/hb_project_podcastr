@@ -74,7 +74,7 @@ $("#player").on("ended", function() {
 });
 
 // eventhandler on category change
-$("#category").change(function() {
+$("#category").on("click", function() {
     console.log("setting queue to empty");
     // emptying the queue and resetting the offset
     queue = [];

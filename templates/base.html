@@ -12,6 +12,8 @@
 <body>
     <script src="https://code.jquery.com/jquery.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
     {% if 'user_id' in session %} 
         <button id="logout"><a href="/logout">Logout</a></button>
         <button id="user_profile"><a href="/userprofile">User Profile</a></button>
@@ -30,6 +32,7 @@
 
     {% if g.jasmine_tests %}
         <!-- stuff for testing -->
+        <br><br>
         <link rel="stylesheet" href="/static/js_test/jasmine.min.css">
         <script src="/static/js_test/jasmine.min.js"></script>
         <script src="/static/js_test/jasmine-html.min.js"></script>

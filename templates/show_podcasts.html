@@ -8,28 +8,26 @@
 
 <h1>Let's see the podcasts!</h1>
 
-<form>
-  <label>Select a listening category</label>
-  <select id="category">
 
-    <option value="">--</option>
-    <option value="News">News & Politics</option>
-    <option value="Culture">Culture</option>
-    <option value="Comedy">Comedy</option>
-    <option value="Arts">Arts</option>
-    <option value="Business">Business</option>
-    <option value="Education">Education</option>
-    <option value="Science">Science</option>
-    <option value="Kids">Kids</option>
-    <option value="Music">Music</option>
-    <option value="Sports">Sports</option>
-    <option value="Government">Government</option>
-    <option value="Technology">Technology</option>
-    <option value="Health">Health</option>
-    <option value="TV">TV</option>
+<div id="category" class="btn-group-vertical" role="group">
 
-  </select>
-</form>
+  <button type="button" class="btn btn-default" value="News">News & Politics</button>
+  <button type="button" class="btn btn-default" value="Culture">Culture</button>
+  <button type="button" class="btn btn-default" value="Comedy">Comedy</button>
+  <button type="button" class="btn btn-default" value="Arts">Arts</button>
+  <button type="button" class="btn btn-default" value="Business">Business</button>
+  <button type="button" class="btn btn-default" value="Education">Education</button>
+  <button type="button" class="btn btn-default" value="Science">Science</button>
+  <button type="button" class="btn btn-default" value="Kids">Kids</button>
+  <button type="button" class="btn btn-default" value="Music">Music</button>
+  <button type="button" class="btn btn-default" value="Sports">Sports</button>
+  <button type="button" class="btn btn-default" value="Government">Government</button>
+  <button type="button" class="btn btn-default" value="Technology">Technology</button>
+  <button type="button" class="btn btn-default" value="Health">Health</button>
+  <button type="button" class="btn btn-default" value="TV">TV</button>
+
+</div>
+
 <div id="media">
   <h3>Station: <span id="station"></span></h3>
   <p>About: <span id="podcast-description"></span></p>
@@ -37,6 +35,10 @@
   <audio id="player" controls autoplay>
 
   </audio>
+  
+  <br>
+  <button>Skip</button>
+  <button>I love it!</button>
 </div>
 
 
@@ -45,5 +47,5 @@
 {% endblock %}
 
 {% block js_tests %}
-    <script src="/static/js_test/play_podcasts_tests.js"></script>
+     <!-- <script src="/static/js_test/play_podcasts_tests.js"></script> -->
 {% endblock %}
