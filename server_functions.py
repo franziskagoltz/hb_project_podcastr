@@ -48,9 +48,13 @@ def add_user(user_info):
 def get_podcasts(channel_ids, offset):
     """Queries the database for podcasts based on selected category"""
 
+    user_id = session["user_id"]
+
+    past_podcasts = get_podcasts_listened_to(user_id)
+
     all_podcasts = []
 
-    all_episodes = Podcast.query.filter(Podcast.channel_id.in_(channel_ids))
+    all_episodes = Podcast.query.filter(Podcast.channel_id.in_(channel_ids), db.not_(Podcast.podcast_id.in_(past_podcasts)))
     newest_first = all_episodes.order_by(desc(Podcast.released_at))
     two_newest_from_offset = newest_first.limit(2).offset(offset).all()
 
@@ -108,8 +112,8 @@ def record_history(user_id, podcast_id):
     db.session.commit()
 
 
-def get_history(user_id):
-    """Gets the listening history of a user, limit by 10"""
+def get_recent_history(user_id):
+    """Gets the listening history of a user, limit by 10, for userprofile display"""
 
     all_history = ListeningHistory.query.filter(ListeningHistory.user_id == user_id)
 
@@ -118,3 +122,12 @@ def get_history(user_id):
     last_10 = recent_first.limit(10).all()
 
     return last_10
+
+
+def get_podcasts_listened_to(user_id):
+    """Gets the complete listening history for a specific user
+        returns a list of podcast ids of each episode listened to"""
+
+    all_history = ListeningHistory.query.filter(ListeningHistory.user_id == user_id).all()
+
+    return [entry.podcast_id for entry in all_history]
