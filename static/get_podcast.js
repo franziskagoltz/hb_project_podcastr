@@ -74,7 +74,7 @@ function playNewCategory(category) {
 $("#player").on("ended", function() {
 
     // send the id of the episode to the server
-    $.post("/record", {"data": episode.podcast_id});
+    $.post("/record", {"data": jsData.episode.podcast_id});
     // check queue and play new podcast
     checkQueue(jsData["globalVarCategory"]);
 });
@@ -83,7 +83,7 @@ $("#player").on("ended", function() {
 // eventhandler on skip
 $("#skip").on("click", function() {
     console.log("skipping");
-    $.post("/record", {"data": episode.podcast_id});
+    $.post("/record", {"data": jsData.episode.podcast_id});
     checkQueue(jsData.globalVarCategory);
 });
 
