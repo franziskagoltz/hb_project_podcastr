@@ -108,7 +108,8 @@ class ListeningHistory(db.Model):
     podcast_id = db.Column(db.Integer, db.ForeignKey("podcasts.podcast_id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     listened_at = db.Column(db.DateTime, nullable=False)
-    # location
+    skip = db.Column(db.Boolean, nullable=True)
+    love = db.Column(db.Boolean, nullable=True)
 
     users = db.relationship("User", backref=db.backref("listening_histories", order_by=user_id))
 
@@ -125,7 +126,7 @@ class ListeningHistory(db.Model):
 def connect_to_db(app, database_uri):
     """Connect the database to our Flask app."""
 
-    # Configure to use PstgreSQL database
+    # Configure to use PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     db.app = app
     db.init_app(app)
