@@ -100,12 +100,12 @@ def get_channel_ids(tag_ids):
     return channel_ids
 
 
-def record_history(user_id, podcast_id):
+def record_history(user_id, podcast_id, skip, love):
     """records the user listening history"""
 
     listened_at = datetime.now()
 
-    history = ListeningHistory(podcast_id=podcast_id, user_id=user_id, listened_at=listened_at)
+    history = ListeningHistory(podcast_id=podcast_id, user_id=user_id, listened_at=listened_at, skip=skip, love=love)
 
     db.session.add(history)
 
@@ -131,3 +131,9 @@ def get_podcasts_listened_to(user_id):
     all_history = ListeningHistory.query.filter(ListeningHistory.user_id == user_id).all()
 
     return [entry.podcast_id for entry in all_history]
+
+
+def get_skipped_and_likes(user_id):
+    """Gets all user listening history to display skips/likes on userprofile"""
+
+    return ListeningHistory.query.filter(ListeningHistory.user_id == user_id).all()
