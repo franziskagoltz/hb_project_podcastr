@@ -12,11 +12,13 @@
 
 <button id="listen"><a href="/podcasts">Listen Now!</a></button>
 
-<table>
+<br>
+
+<table class="table table-striped">
   <thead>
+    Recent History
     <tr>
       <th>Date</th>
-<!--       <th>Channel ID</th>  -->
       <th>Podcast ID</th>
     </tr>
   </thead>
@@ -29,5 +31,42 @@
     {% endfor %}
   </tbody>
 </table>
+
+<table class="table table-striped">
+  <thead>
+    Likes
+    <tr>
+      <th>Podcast ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in skip_like %}
+      {% if record.love %}
+      <tr>
+        <td>{{ record.podcast_id }}</td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+    Skipped
+    <tr>
+      <th>Podcast ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in skip_like %}
+      {% if record.skip %}
+      <tr>
+        <td>{{ record.podcast_id }}</td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
 
 {% endblock %}
