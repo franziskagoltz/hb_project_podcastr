@@ -108,9 +108,11 @@ def user_profile():
 
         user = server_functions.get_user(user_id)
 
-        history = server_functions.get_history(user_id)
+        history = server_functions.get_recent_history(user_id)
 
-        return render_template("/user_profile.html", user=user, history=history)
+        skip_like = server_functions.get_skipped_and_likes(user_id)
+
+        return render_template("/user_profile.html", user=user, history=history, skip_like=skip_like)
     else:
         flash("You must be logged in to see your profile.")
         return redirect("/")
@@ -129,8 +131,15 @@ def record_podcast():
 
     user_id = session["user_id"]
     podcast_id = int(request.form.get("data"))
+    skip = request.form.get("skip")
+    love = request.form.get("love")
 
-    server_functions.record_history(user_id, podcast_id)
+    if skip:
+        skip = True
+    if love:
+        love = True
+
+    server_functions.record_history(user_id, podcast_id, skip, love)
 
     return jsonify({"status": "Success!"})
 
