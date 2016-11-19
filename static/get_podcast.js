@@ -79,14 +79,17 @@ $("#player").on("ended", function() {
     checkQueue(jsData["globalVarCategory"]);
 });
 
-
 // eventhandler on skip
 $("#skip").on("click", function() {
     console.log("skipping");
-    $.post("/record", {"data": jsData.episode.podcast_id});
+    $.post("/record", {"data": jsData.episode.podcast_id, "skip": "true"});
     checkQueue(jsData.globalVarCategory);
 });
 
+// on love, store to db
+$("#love").on("click", function() {
+    $.post("/record", {"data": jsData.episode.podcast_id, "love": "true"});
+});
 
 
 // OLD COMMENTS/TRIES
