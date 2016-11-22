@@ -1,72 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="col-xs-12">
+  <h2>User Profile</h2>
 
-<h2>User Profile</h2>
+  <label>Name: {{ user.name }}</label><br>
+  <label>Email: {{ user.email }}</label><br>
+  <label>Age: {{ user.age }}</label><br>
 
-<label>Name: {{ user.name }}</label><br>
-<label>Email: {{ user.email }}</label><br>
-<label>Age: {{ user.age }}</label><br>
+  <br>
 
-<br>
+  <button id="listen"><a href="/podcasts">Listen Now!</a></button>
 
-<button id="listen"><a href="/podcasts">Listen Now!</a></button>
+  <br>
 
-<br>
+</div>
 
-<table class="table table-striped">
-  <thead>
-    Recent History
-    <tr>
-      <th>Date</th>
-      <th>Podcast ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for record in history %}
-    <tr>
-      <td>{{ record.listened_at.strftime('%Y-%m-%d at %I:%M:%S') }}</td>
-      <td>{{ record.podcast_id }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="col-xs-12">
+  <br>
+  <br>
+</div>
 
-<table class="table table-striped">
-  <thead>
-    Likes
-    <tr>
-      <th>Podcast ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for record in skip_like %}
-      {% if record.love %}
+<div class="col-xs-12 col-sm-6">
+  <table class="table table-striped">
+    <thead>
+      Recent History
       <tr>
+        <th>Date</th>
+        <th>Podcast ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in history %}
+      <tr>
+        <td>{{ record.listened_at.strftime('%Y-%m-%d at %I:%M:%S') }}</td>
         <td>{{ record.podcast_id }}</td>
       </tr>
-      {% endif %}
-    {% endfor %}
-  </tbody>
-</table>
-
-<table class="table table-striped">
-  <thead>
-    Skipped
-    <tr>
-      <th>Podcast ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for record in skip_like %}
-      {% if record.skip %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="col-sm-4">
+  <table class="table table-striped">
+    <thead>
+      Likes
       <tr>
-        <td>{{ record.podcast_id }}</td>
+        <th>Podcast ID</th>
       </tr>
-      {% endif %}
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {% for record in skip_like %}
+        {% if record.love %}
+        <tr>
+          <td>{{ record.podcast_id }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
 
+  <table class="table table-striped">
+    <thead>
+      Skipped
+      <tr>
+        <th>Podcast ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in skip_like %}
+        {% if record.skip %}
+        <tr>
+          <td>{{ record.podcast_id }}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 {% endblock %}
