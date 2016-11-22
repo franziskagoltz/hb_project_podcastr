@@ -6,40 +6,47 @@
 
 {% block content %}
 
-<h1>Let's see the podcasts!</h1>
+{% if 'user_id' in session %} 
+  <h1>Let's see the podcasts!</h1>
 
-<div id="category" class="btn-group-vertical" role="group">
+  <div id="category" class="btn-group-vertical" role="group">
 
-  <button type="button" class="btn btn-default" value="News" onclick=playNewCategory("News")>News & Politics</button>
-  <button type="button" class="btn btn-default" value="Culture" onclick=playNewCategory("Culture")>Culture</button>
-  <button type="button" class="btn btn-default" value="Comedy" onclick=playNewCategory("Comedy")>Comedy</button>
-  <button type="button" class="btn btn-default" value="Arts" onclick=playNewCategory("Arts")>Arts</button>
-  <button type="button" class="btn btn-default" value="Business" onclick=playNewCategory("Business")>Business</button>
-  <button type="button" class="btn btn-default" value="Education" onclick=playNewCategory("Education")>Education</button>
-  <button type="button" class="btn btn-default" value="Science" onclick=playNewCategory("Science")>Science</button>
-  <button type="button" class="btn btn-default" value="Kids" onclick=playNewCategory("Kids")>Kids</button>
-  <button type="button" class="btn btn-default" value="Music" onclick=playNewCategory("Music")>Music</button>
-  <button type="button" class="btn btn-default" value="Sports" onclick=playNewCategory("Sports")>Sports</button>
-  <button type="button" class="btn btn-default" value="Government" onclick=playNewCategory("Government")>Government</button>
-  <button type="button" class="btn btn-default" value="Technology" onclick=playNewCategory("Technology")>Technology</button>
-  <button type="button" class="btn btn-default" value="Health" onclick=playNewCategory("Health")>Health</button>
-  <button type="button" class="btn btn-default" value="TV" onclick=playNewCategory("TV")>TV</button>
+    <button type="button" class="btn btn-default" value="News" onclick=playNewCategory("News")>News & Politics</button>
+    <button type="button" class="btn btn-default" value="Culture" onclick=playNewCategory("Culture")>Culture</button>
+    <button type="button" class="btn btn-default" value="Comedy" onclick=playNewCategory("Comedy")>Comedy</button>
+    <button type="button" class="btn btn-default" value="Arts" onclick=playNewCategory("Arts")>Arts</button>
+    <button type="button" class="btn btn-default" value="Business" onclick=playNewCategory("Business")>Business</button>
+    <button type="button" class="btn btn-default" value="Education" onclick=playNewCategory("Education")>Education</button>
+    <button type="button" class="btn btn-default" value="Science" onclick=playNewCategory("Science")>Science</button>
+    <button type="button" class="btn btn-default" value="Kids" onclick=playNewCategory("Kids")>Kids</button>
+    <button type="button" class="btn btn-default" value="Music" onclick=playNewCategory("Music")>Music</button>
+    <button type="button" class="btn btn-default" value="Sports" onclick=playNewCategory("Sports")>Sports</button>
+    <button type="button" class="btn btn-default" value="Government" onclick=playNewCategory("Government")>Government</button>
+    <button type="button" class="btn btn-default" value="Technology" onclick=playNewCategory("Technology")>Technology</button>
+    <button type="button" class="btn btn-default" value="Health" onclick=playNewCategory("Health")>Health</button>
+    <button type="button" class="btn btn-default" value="TV" onclick=playNewCategory("TV")>TV</button>
 
-</div>
+  </div>
 
-<div id="media">
-  <h3>Station: <span id="station"></span></h3>
-  <p>About: <span id="podcast-description"></span></p>
+  <div id="media">
+    <h3>Station: <span id="station"></span></h3>
+    <p>About: <span id="podcast-description"></span></p>
 
-  <audio id="player" controls autoplay>
+    <audio id="player" controls autoplay>
 
-  </audio>
-  
-  <br>
-  <button id="skip">Skip</button>
-  <button id="love">I love it!</button>
-</div>
+    </audio>
+    
+    <br>
+      <button id="skip">Skip</button>
+      <button id="love">I love it!</button>
 
+  </div>
+
+{% else %}
+
+  <h1>You must be logged in to listen</h1>
+
+{% endif %}
 
 
 <script src="/static/get_podcast.js"></script>
