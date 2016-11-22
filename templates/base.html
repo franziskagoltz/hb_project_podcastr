@@ -42,10 +42,11 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-    {% for message in get_flashed_messages() %}
-        {{ message }}
-    {% endfor %}
-
+<div class="col-xs-12">
+  {% for message in get_flashed_messages() %}
+    {{ message }}
+  {% endfor %}
+</div>
     {% block content %}
     {% endblock %}
 
