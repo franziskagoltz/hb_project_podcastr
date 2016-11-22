@@ -2,12 +2,13 @@
 
 {% block content %}
 
-<h1>Welcome to PodcastRadio!</h1>
+<div class="col-sm-12">
+    <h1>Welcome to PodcastRadio!</h1><br>
 
-{% if 'user_id' in session %} 
+    {% if 'user_id' in session %} 
 
-    <button id="listen"><a href="/podcasts">Listen Now!</a></button>
+        <button id="listen"><a href="/podcasts">Listen Now!</a></button>
 
-{% endif %}
-
+    {% endif %}
+</div>
 {% endblock %}
