@@ -43,6 +43,7 @@ def add_user(user_info):
 
     # logs user in upon signup
     session["user_id"] = user.user_id
+    session["user_name"] = user.name
 
 
 def get_podcasts(channel_ids, offset):
