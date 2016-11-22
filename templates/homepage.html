@@ -4,6 +4,10 @@
 
 <h1>Welcome to PodcastRadio!</h1>
 
-<button id="listen"><a href="/podcasts">Listen Now!</a></button>
+{% if 'user_id' in session %} 
+
+    <button id="listen"><a href="/podcasts">Listen Now!</a></button>
+
+{% endif %}
 
 {% endblock %}
