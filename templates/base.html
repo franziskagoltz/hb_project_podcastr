@@ -14,14 +14,33 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-    {% if 'user_id' in session %} 
-        <button id="logout"><a href="/logout">Logout</a></button>
-        <button id="user_profile"><a href="/userprofile">User Profile</a></button>
-    {% else %}
-        <button id="login"><a href="/login">Login</a></button>
-        <button id="sign_up"><a href="/signup">Sign Up</a></button>
-    {% endif %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> PodcastRadio</a>
+    </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        {% if 'user_id' in session %}
+            <p class="navbar-text">You're signed in as "<a href="/userprofile" class="navbar-link">{{ session.user_name }}</a>"</p>
+            <li><a href="/logout">Logout</a></li>
+        {% else %}
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Log In</a></li>
+        {% endif %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
     {% for message in get_flashed_messages() %}
         {{ message }}
