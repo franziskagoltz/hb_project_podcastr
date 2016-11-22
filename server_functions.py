@@ -52,11 +52,11 @@ def get_podcasts(channel_ids, offset):
 
     past_podcasts = get_podcasts_listened_to(user_id)
 
+    all_podcasts = []
+
     all_episodes = Podcast.query.filter(Podcast.channel_id.in_(channel_ids), db.not_(Podcast.podcast_id.in_(past_podcasts)))
     newest_first = all_episodes.order_by(desc(Podcast.released_at))
     two_newest_from_offset = newest_first.limit(2).offset(offset).all()
-
-    all_podcasts = []
 
     for episode in two_newest_from_offset:
         podcast = {}
