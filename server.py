@@ -59,7 +59,7 @@ def confirm_signup():
 
     flash("You are now signed up!")
 
-    return redirect("/")
+    return redirect("/podcasts")
 
 
 @app.route("/login")
@@ -82,7 +82,7 @@ def validate_login():
         session["user_id"] = current_user.user_id
         session["user_name"] = current_user.name
 
-        return redirect("/")
+        return redirect("/podcasts")
 
     except NoResultFound:
         flash("email and password didn't match any of our records")
