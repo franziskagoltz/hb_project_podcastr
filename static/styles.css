@@ -1,0 +1,19 @@
+body {
+    background-image: url(imgs/wallpaper1.jpg); 
+}
+
+.bg{
+        background: rgba(16, 10, 4, 0.6);
+}
+.bg_gray{
+        background: rgba(78, 93, 108, 0.6); 
+}
+/*.navbar-default {
+    
+    opacity: 0.2;
+    color: #ebebeb;
+}
+
+.well {
+    opacity: 0.2;
+}*/
