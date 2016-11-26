@@ -12,8 +12,11 @@
 <body>
     <script src="https://code.jquery.com/jquery.js"></script>
 
+<!-- <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.css"> -->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic,700,900,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/static/bootstrap-superhero.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/styles.css">
 
 <nav class="navbar navbar-default">
@@ -43,7 +46,7 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
+<div class="container-fluid">
 <div class="col-xs-12">
   {% for message in get_flashed_messages() %}
     {{ message }}
@@ -64,7 +67,7 @@
 
     {% block js_tests %}
     {% endblock %}
-
+</div>
 </body>
 
 

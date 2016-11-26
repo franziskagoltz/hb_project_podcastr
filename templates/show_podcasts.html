@@ -9,29 +9,30 @@
 {% if 'user_id' in session %} 
   <div class="col-xs-12">
     <h1>Let's see the podcasts!</h1>
+    <hr />
   </div>
 
   <div class="col-xs-6 col-md-2">
     <div id="category" class="btn-group-vertical" role="group">
-      <button type="button" class="btn btn-default" value="News" onclick=playNewCategory("News")>News & Politics</button>
-      <button type="button" class="btn btn-default" value="Culture" onclick=playNewCategory("Culture")>Culture</button>
-      <button type="button" class="btn btn-default" value="Comedy" onclick=playNewCategory("Comedy")>Comedy</button>
-      <button type="button" class="btn btn-default" value="Arts" onclick=playNewCategory("Arts")>Arts</button>
-      <button type="button" class="btn btn-default" value="Business" onclick=playNewCategory("Business")>Business</button>
-      <button type="button" class="btn btn-default" value="Education" onclick=playNewCategory("Education")>Education</button>
-      <button type="button" class="btn btn-default" value="Science" onclick=playNewCategory("Science")>Science</button>
-      <button type="button" class="btn btn-default" value="Kids" onclick=playNewCategory("Kids")>Kids</button>
-      <button type="button" class="btn btn-default" value="Music" onclick=playNewCategory("Music")>Music</button>
-      <button type="button" class="btn btn-default" value="Sports" onclick=playNewCategory("Sports")>Sports</button>
-      <button type="button" class="btn btn-default" value="Government" onclick=playNewCategory("Government")>Government</button>
-      <button type="button" class="btn btn-default" value="Technology" onclick=playNewCategory("Technology")>Technology</button>
-      <button type="button" class="btn btn-default" value="Health" onclick=playNewCategory("Health")>Health</button>
-      <button type="button" class="btn btn-default" value="TV" onclick=playNewCategory("TV")>TV</button>
+      <button type="button" class="btn btn-default bg_gray" value="News" onclick=playNewCategory("News")>News & Politics</button>
+      <button type="button" class="btn btn-default bg_gray" value="Culture" onclick=playNewCategory("Culture")>Culture</button>
+      <button type="button" class="btn btn-default bg_gray" value="Comedy" onclick=playNewCategory("Comedy")>Comedy</button>
+      <button type="button" class="btn btn-default bg_gray" value="Arts" onclick=playNewCategory("Arts")>Arts</button>
+      <button type="button" class="btn btn-default bg_gray" value="Business" onclick=playNewCategory("Business")>Business</button>
+      <button type="button" class="btn btn-default bg_gray" value="Education" onclick=playNewCategory("Education")>Education</button>
+      <button type="button" class="btn btn-default bg_gray" value="Science" onclick=playNewCategory("Science")>Science</button>
+      <button type="button" class="btn btn-default bg_gray" value="Kids" onclick=playNewCategory("Kids")>Kids</button>
+      <button type="button" class="btn btn-default bg_gray" value="Music" onclick=playNewCategory("Music")>Music</button>
+      <button type="button" class="btn btn-default bg_gray" value="Sports" onclick=playNewCategory("Sports")>Sports</button>
+      <button type="button" class="btn btn-default bg_gray" value="Government" onclick=playNewCategory("Government")>Government</button>
+      <button type="button" class="btn btn-default bg_gray" value="Technology" onclick=playNewCategory("Technology")>Technology</button>
+      <button type="button" class="btn btn-default bg_gray" value="Health" onclick=playNewCategory("Health")>Health</button>
+      <button type="button" class="btn btn-default bg_gray" value="TV" onclick=playNewCategory("TV")>TV</button>
     </div>
   </div>
   <div class="col-xs-12 col-md-6">
-    <div id="media">
-      <h3>Station: <span id="station"></span></h3>
+    <div id="media" class="well bg_gray">
+      <h3 style="margin-top:0px;">Station: <span id="station"><i>Select a station</i></span></h3>
       <p>About: <span id="podcast-description"></span></p>
 
       <audio id="player" controls autoplay>
@@ -39,8 +40,8 @@
       </audio>
       
       <br>
-        <button id="skip">Skip</button>
-        <button id="love">I love it!</button>
+        <button class="btn btn-warning" id="skip"><i class="glyphicon glyphicon-step-forward"></i> Skip</button>
+        <button class="btn btn-danger" id="love">I <i class="glyphicon glyphicon-heart"></i> it!</button>
     </div>
   </div>
 {% else %}

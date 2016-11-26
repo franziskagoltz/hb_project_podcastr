@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1 class="col-xs-12" >Login to listen to ALL the podcasts!</h1>
-
-<form  class="col-sm-12 col-md-6" action="/login" method="POST">
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input type="text" class="form-control" name="email_address" id="email" placeholder="Email">
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-  </div>
-    <button type="submit" class="btn btn-default">Log me in!</button>
-</form>
-
-
+<div class="container">
+    <div class="row">
+            <h1>Login to listen to ALL the podcasts!</h1>
+            <hr>
+        <div class="col-sm-12 col-md-12 bg_gray">
+            <br>
+            <form  class="" action="/login" method="POST">
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="text" class="form-control" name="email_address" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+              </div>
+                <button type="submit" class="btn btn-default">Log me in!</button><br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,30 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-xs-12">
-  <h2>User Profile</h2>
+<div class="col-xs-3">
+  <div class="well col-xs-10 bg_gray">
+    <h2>User Profile</h2>
 
-  <label>Name: {{ user.name }}</label><br>
-  <label>Email: {{ user.email }}</label><br>
-  <label>Age: {{ user.age }}</label><br>
+    <label>Name: {{ user.name }}</label><br>
+    <label>Email: {{ user.email }}</label><br>
+    <label>Age: {{ user.age }}</label><br>
 
-  <br>
+    <br>
 
-  <button id="listen"><a href="/podcasts">Listen Now!</a></button>
+    <!-- <button id="listen"><a class="btn btn-default" href="/podcasts">Listen Now!</a></button> -->
+    <a class="btn btn-default bg_gray" href="/podcasts"><span class="glyphicon glyphicon-play-circle"></span> Listen Now!</a>
 
-  <br>
-
+    <br>
+  </div>
 </div>
 
-<div class="col-xs-12">
+<!-- <div class="col-xs-1">
   <br>
   <br>
-</div>
+</div> -->
 
-<div class="col-xs-12 col-sm-6">
-  <table class="table table-striped">
+<div class="col-xs-12 col-sm-4 well bg_gray">
+  <table class="table table-hover table-striped">
     <thead>
-      Recent History
+      <h4>Recent History</h4>
       <tr>
         <th>Date</th>
         <th>Podcast ID</th>
@@ -40,10 +42,11 @@
     </tbody>
   </table>
 </div>
-<div class="col-sm-4">
+<div class="col-sm-3">
+  <div class="well col-xs-8 bg_gray">
   <table class="table table-striped">
     <thead>
-      Likes
+      <h4>Likes</h4>
       <tr>
         <th>Podcast ID</th>
       </tr>
@@ -58,7 +61,7 @@
       {% endfor %}
     </tbody>
   </table>
-
+  <br>
   <table class="table table-striped">
     <thead>
       Skipped
@@ -76,6 +79,7 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
 </div>
 
 {% endblock %}
