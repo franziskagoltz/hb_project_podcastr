@@ -155,7 +155,7 @@ def load_tag_channel_links(channel):
 if __name__ == "__main__":
     # running when file gets called directly
 
-    connect_to_db(app)
+    connect_to_db(app, "postgresql:///podcastradio")
 
     # In case tables haven't been created, create them
     db.create_all()
