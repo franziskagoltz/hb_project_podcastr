@@ -23,14 +23,7 @@ class FlaskTestsBasic(TestCase):
         """Test homepage page."""
 
         result = self.client.get("/")
-        self.assertIn("Welcome to PodcastRadio", result.data)
-
-    def test_listen(self):
-        """Test podcast listen page"""
-
-        result = self.client.get("/podcasts")
-        self.assertIn("Let's see the podcasts", result.data)
-        self.assertIn("Station", result.data)
+        self.assertIn("Welcome to Podcastr", result.data)
 
     def test_signup(self):
         """Test signup page"""
@@ -60,6 +53,7 @@ class FlaskTestsLoggedIn(TestCase):
         with self.client as c:
             with c.session_transaction() as sess:
                 sess["user_id"] = 1
+                sess["user_name"] = "SessionUserName"
 
     def test_userprofile_page(self):
         """Test user profile page."""
@@ -73,6 +67,13 @@ class FlaskTestsLoggedIn(TestCase):
         result = self.client.get("/")
         self.assertIn("Logout", result.data)
         self.assertNotIn("Login", result.data)
+
+    def test_listen(self):
+        """Test podcast listen page"""
+
+        result = self.client.get("/podcasts")
+        self.assertIn("Let's see the podcasts", result.data)
+        self.assertIn("Station", result.data)
 
 
 class FlaskTestsDatabase(TestCase):
@@ -151,6 +152,7 @@ class FlaskTestsDatabase(TestCase):
         with self.client as c:
             with c.session_transaction() as sess:
                 sess["user_id"] = 1
+                sess["user_name"] = "SessionUserName"
 
         result = self.client.get("/userprofile")
         self.assertIn("Jane", result.data)
@@ -170,6 +172,12 @@ class FlaskTestsLoggedOut(TestCase):
 
         result = self.client.get("/userprofile", follow_redirects=True)
         self.assertIn("You must be logged in", result.data)
+
+    def test_listen(self):
+        """Test podcast listen page - should not be visible when logged out"""
+
+        result = self.client.get("/podcasts")
+        self.assertIn("must be logged in", result.data)
 
 
 def example_data():
