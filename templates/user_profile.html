@@ -1,29 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+<br>
 <div class="col-xs-3">
   <div class="well col-xs-10 bg_gray">
     <h2>User Profile</h2>
 
     <label>Name: {{ user.name }}</label><br>
     <label>Email: {{ user.email }}</label><br>
-    <label>Age: {{ user.age }}</label><br>
 
     <br>
 
-    <!-- <button id="listen"><a class="btn btn-default" href="/podcasts">Listen Now!</a></button> -->
     <a class="btn btn-default bg_gray" href="/podcasts"><span class="glyphicon glyphicon-play-circle"></span> Listen Now!</a>
 
     <br>
   </div>
 </div>
 
-<!-- <div class="col-xs-1">
-  <br>
-  <br>
-</div> -->
-
-<div class="col-xs-12 col-sm-4 well bg_gray">
+<div class="col-xs-12 col-sm-5 well bg_gray">
   <table class="table table-hover table-striped">
     <thead>
       <h4>Recent History</h4>
@@ -42,7 +36,7 @@
     </tbody>
   </table>
 </div>
-<div class="col-sm-3">
+<div class="col-sm-4">
   <div class="well col-xs-8 bg_gray">
   <table class="table table-striped">
     <thead>
@@ -64,7 +58,7 @@
   <br>
   <table class="table table-striped">
     <thead>
-      Skipped
+      <h4>Skipped</h4>
       <tr>
         <th>Podcast ID</th>
       </tr>
