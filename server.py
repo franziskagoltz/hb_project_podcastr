@@ -7,7 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from flask import Flask, jsonify, render_template, redirect, request, flash, session, g
 
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, Podcast, Tag, TagChannel, User, ListeningHistory
 
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     connect_to_db(app, "postgresql:///podcastradio")
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     import sys
     if sys.argv[-1] == "jstest":
