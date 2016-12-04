@@ -4,12 +4,20 @@ from model import connect_to_db, db, Podcast, Tag, User, ListeningHistory
 from flask import Flask, jsonify, session
 from sqlalchemy import desc
 from datetime import datetime
+from flask.ext.bcrypt import Bcrypt
+
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 
 def get_current_user(email, password):
     """getting the current user from the database"""
 
-    return User.query.filter(User.email == email, User.password == password).one()
+    stored_pwhash = User.query.filter(User.email == email).one().password
+
+    if bcrypt.check_password_hash(stored_pwhash, password):
+
+        return User.query.filter(User.email == email).one()
 
 
 def get_user(user_id):
@@ -34,7 +42,7 @@ def add_user(user_info):
         else:
             age = None
 
-    user = User(name=name, email=email, password=password,
+    user = User(name=name, email=email, password=bcrypt.generate_password_hash(password),
                 age=age, sex=sex, zipcode=zipcode)
 
     db.session.add(user)
