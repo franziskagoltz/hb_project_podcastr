@@ -8,7 +8,7 @@ Podcastr was inspired to solve the problem of choosing what podcast to listen to
 
 <h6>Technology Stack:</h6>
 
-Python, Flask, PostgreSQL, SQLAlchemy, AJAX, JSON, Jinja, Javascript, JQuery, HTML, CSS, Bootstrap. Tests: Python Unit Tests, Selenium, Jasmin
+Python, Flask, Flask Bcrypt, PostgreSQL, SQLAlchemy, AJAX, JSON, Jinja, Javascript, JQuery, HTML, CSS, Bootstrap. Tests: Python Unit Tests, Selenium, Jasmin
 
 
 <h6>APIs Used:</h6>
