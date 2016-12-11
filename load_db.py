@@ -21,10 +21,16 @@ def load_channels(channel):
     channel_author = channel["feed"].get("author")
     channel_name = channel["feed"].get("title")
     channel_summary = channel["feed"].get("summary")
+    channel_modified = channel.modified
+    channel_etag = channel.etag
+    channel_checked = datetime.now()
 
     channel = Channel(channel_author=channel_author,
                       channel_name=channel_name,
-                      channel_summary=channel_summary,)
+                      channel_summary=channel_summary,
+                      channel_modified=channel_modified,
+                      channel_etag=channel_etag,
+                      channel_checked=channel_checked)
 
     db.session.add(channel)
 
