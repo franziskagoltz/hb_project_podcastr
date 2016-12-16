@@ -24,6 +24,7 @@ def load_channels(channel):
     channel_modified = channel.modified
     channel_etag = channel.etag
     channel_checked = datetime.now()
+    channel_url = channel.href
 
     channel = Channel(channel_author=channel_author,
                       channel_name=channel_name,
