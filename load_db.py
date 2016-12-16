@@ -30,7 +30,8 @@ def load_channels(channel):
                       channel_summary=channel_summary,
                       channel_modified=channel_modified,
                       channel_etag=channel_etag,
-                      channel_checked=channel_checked)
+                      channel_checked=channel_checked
+                      channel_url=channel_url)
 
     db.session.add(channel)
 
@@ -169,6 +170,12 @@ if __name__ == "__main__":
     # Import data to podtcastradio db
 
     for feed in open("database/data.txt"):
+
+        etag = None
+        modified = None
+
+        channel = feedparser.parse(feed, etag=etag, modified=modified)
+
         channel = feedparser.parse(feed)
         load_channels(channel)
         load_podcasts(channel)
