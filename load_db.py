@@ -31,7 +31,7 @@ def load_channels(channel):
                       channel_summary=channel_summary,
                       channel_modified=channel_modified,
                       channel_etag=channel_etag,
-                      channel_checked=channel_checked
+                      channel_checked=channel_checked,
                       channel_url=channel_url)
 
     db.session.add(channel)
