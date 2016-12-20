@@ -21,9 +21,20 @@ def load_channels(channel):
     channel_author = channel["feed"].get("author")
     channel_name = channel["feed"].get("title")
     channel_summary = channel["feed"].get("summary")
-    channel_modified = channel.modified
-    channel_etag = channel.etag
-    channel_checked = datetime.now()
+    try:
+        channel_modified = channel.modified
+    except AttributeError:
+        channel_modified = None
+    try:
+        channel_etag = channel.etag
+    except AttributeError:
+        channel_etag = None
+    # channel_last_published = channel["feed"].get("published_parsed")
+    channel_last_published_at = channel["feed"].get("published_parsed")
+
+    if channel_last_published_at:
+        channel_last_published_at = datetime.fromtimestamp(mktime(channel_last_published_at))
+    channel_checked_at = datetime.now()
     channel_url = channel.href
 
     channel = Channel(channel_author=channel_author,
@@ -31,7 +42,8 @@ def load_channels(channel):
                       channel_summary=channel_summary,
                       channel_modified=channel_modified,
                       channel_etag=channel_etag,
-                      channel_checked=channel_checked,
+                      channel_last_published_at=channel_last_published_at,
+                      channel_checked_at=channel_checked_at,
                       channel_url=channel_url)
 
     db.session.add(channel)
@@ -76,7 +88,7 @@ def load_podcasts(channel):
         else:
             podcast_duration = 0
 
-        # converting to a dattime from a python timestruct:
+        # converting to a datetime from a python timestruct:
         # http://stackoverflow.com/questions/1697815/how-do-you-convert-a-python-time-struct-time-object-into-a-datetime-object/18726020
         python_timestruct = podcast.get("published_parsed")
 
@@ -89,24 +101,29 @@ def load_podcasts(channel):
         if all_images:
             image_url = all_images.get("href")
 
+        # creating an play url variable, to avoid 'referenced before created error'
+        play_url = None
+
         if all_links:
             for link in all_links:
                 if link.type == "audio/mpeg" or link.type == "video/mp4" or link.type == "audio/x-mpeg":
                     # checking for type of link so we get the correct url
                     play_url = link.get("href")
 
-        podcast = Podcast(channel_id=channel_id,
-                          author=author,
-                          title=title,
-                          podcast_url=podcast_url,
-                          play_url=play_url,
-                          released_at=released_at,
-                          image_url=image_url,
-                          summary=summary,
-                          podcast_duration=podcast_duration,)
+        # we only want to add episodes that have a play_url to the database
+        if play_url:
+            podcast = Podcast(channel_id=channel_id,
+                              author=author,
+                              title=title,
+                              podcast_url=podcast_url,
+                              play_url=play_url,
+                              released_at=released_at,
+                              image_url=image_url,
+                              summary=summary,
+                              podcast_duration=podcast_duration,)
 
-        # adds instance to the session so it will be stored
-        db.session.add(podcast)
+            # adds instance to the session so it will be stored
+            db.session.add(podcast)
 
     # committing to the database
     db.session.commit()
@@ -172,12 +189,8 @@ if __name__ == "__main__":
 
     for feed in open("database/data.txt"):
 
-        etag = None
-        modified = None
-
-        channel = feedparser.parse(feed, etag=etag, modified=modified)
-
         channel = feedparser.parse(feed)
+
         load_channels(channel)
         load_podcasts(channel)
         load_tags(channel)
