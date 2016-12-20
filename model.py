@@ -42,7 +42,8 @@ class Channel(db.Model):
     channel_summary = db.Column(db.String, nullable=True)
     channel_modified = db.Column(db.String(64), nullable=True)
     channel_etag = db.Column(db.String(100), nullable=True)
-    channel_checked = db.Column(db.DateTime, nullable=True)
+    channel_last_published_at = db.Column(db.DateTime, nullable=True)
+    channel_checked_at = db.Column(db.DateTime, nullable=True)
     channel_url = db.Column(db.String(150), nullable=True)
 
     tags = db.relationship("Tag", secondary="tags_channels_link", backref="channels")
