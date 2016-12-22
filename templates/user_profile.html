@@ -2,7 +2,7 @@
 
 {% block content %}
 <br>
-<div class="col-xs-3">
+<div class="col-xs-6 col-sm-4 col-md-3">
   <div class="well col-xs-10 bg_gray">
     <h2>User Profile</h2>
 
@@ -17,39 +17,43 @@
   </div>
 </div>
 
-<div class="col-xs-12 col-sm-5 well bg_gray">
+<div class="col-xs-11 col-sm-5 well bg_gray">
   <table class="table table-hover table-striped">
     <thead>
       <h4>Recent History</h4>
       <tr>
-        <th>Date</th>
-        <th>Podcast ID</th>
+        <th nowrap="nowrap">Date</th>
+        <th nowrap="nowrap">Podcast Station</th>
+        <th nowrap="nowrap">Podcast Episode</th>
       </tr>
     </thead>
     <tbody>
       {% for record in history %}
       <tr>
         <td>{{ record.listened_at.strftime('%Y-%m-%d at %I:%M:%S') }}</td>
-        <td>{{ record.podcast_id }}</td>
+        <td>{{ record.podcasts.author }}</td>
+        <td>{{ record.podcasts.title }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-<div class="col-sm-4">
-  <div class="well col-xs-8 bg_gray">
+<div class="col-sm-5 col-md-4">
+  <div class="well col-xs-12 col-sm-10 bg_gray">
   <table class="table table-striped">
     <thead>
       <h4>Likes</h4>
       <tr>
-        <th>Podcast ID</th>
+        <th nowrap="nowrap">Podcast Station</th>
+        <th nowrap="nowrap">Podcast Episode</th>
       </tr>
     </thead>
     <tbody>
       {% for record in skip_like %}
         {% if record.love %}
         <tr>
-          <td>{{ record.podcast_id }}</td>
+          <td>{{ record.podcasts.author }}</td>
+          <td>{{ record.podcasts.title }}</td>
         </tr>
         {% endif %}
       {% endfor %}
@@ -60,14 +64,16 @@
     <thead>
       <h4>Skipped</h4>
       <tr>
-        <th>Podcast ID</th>
+        <th nowrap="nowrap">Podcast Station</th>
+        <th nowrap="nowrap">Podcast Episode</th>
       </tr>
     </thead>
     <tbody>
       {% for record in skip_like %}
         {% if record.skip %}
         <tr>
-          <td>{{ record.podcast_id }}</td>
+          <td>{{ record.podcasts.author }}</td>
+          <td>{{ record.podcasts.title }}</td>
         </tr>
         {% endif %}
       {% endfor %}
