@@ -51,14 +51,14 @@ def load_channels(channel):
     db.session.commit()
 
 
-def load_podcasts(channel):
+def load_podcasts(channel, channel_id):
     """Load podcasts from rss_parse into database."""
 
     print "Podcasts", channel["feed"].get("title")
 
-    channel_name = channel["feed"].get("title")
+    # channel_name = channel["feed"].get("title")
 
-    channel_id = Channel.query.filter_by(channel_name=channel_name).one().channel_id
+    # channel_id = Channel.query.filter_by(channel_name=channel_name).one().channel_id
 
     for podcast in channel["items"]:
         # iterating through keys in items dict
@@ -181,7 +181,7 @@ if __name__ == "__main__":
     # running when file gets called directly
 
     connect_to_db(app, "postgresql:///podcastradio")
-
+    print "Connected to DB."
     # In case tables haven't been created, create them
     db.create_all()
 
@@ -192,6 +192,8 @@ if __name__ == "__main__":
         channel = feedparser.parse(feed)
 
         load_channels(channel)
-        load_podcasts(channel)
+        channel_name = channel["feed"].get("title")
+        channel_id = Channel.query.filter_by(channel_name=channel_name).one().channel_id
+        load_podcasts(channel, channel_id)
         load_tags(channel)
         load_tag_channel_links(channel)
