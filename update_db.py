@@ -3,7 +3,7 @@
 
 from model import Channel
 import load_db
-from model import connect_to_db
+from model import connect_to_db, db
 
 from flask import Flask
 import feedparser
@@ -34,10 +34,31 @@ def get_newest():
         modified = channel.channel_modified
         channel_id = channel.channel_id
 
-        if etag:
+        if etag is not None:
             print "Updating the DB based on etags"
             newest_feed = feedparser.parse(channel_url, etag=etag, modified=modified)
-            load_db.load_podcasts(newest_feed, channel_id)
+
+            # checking if there are any items in the returned feed
+            if newest_feed.status == 200:
+                load_db.load_podcasts(newest_feed, channel_id)
+
+                # updating the etag and modified values
+                # channel.channel_etag = newest_feed.etag
+                # channel.channel_modified = newest_feed.get("modified")
+
+                db.session.query(Channel).update({Channel.channel_etag: newest_feed.etag})
+
+                db.session.commit()
+        # elif modified:
+        #     "updating db based on modified tag"
+        #     newest_feed = feedparser.parse(channel_url, modified=modified)
+
+        #     # checking if there are any items in the returned feed
+        #     if newest_feed.status == 200:
+        #         load_db.load_podcasts(newest_feed, channel_id)
+        #         channel.channel_modified = newest_feed.modified
+
+        
 
 
 if __name__ == "__main__":
