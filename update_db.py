@@ -26,7 +26,7 @@ def get_newest():
     all_channel_urls = get_channel_urls()
 
     for channel_url in all_channel_urls:
-        print channel_url
+        # print channel_url
         # get associated channel object
         channel = Channel.query.filter_by(channel_url=channel_url).one()
 
@@ -34,21 +34,48 @@ def get_newest():
         modified = channel.channel_modified
         channel_id = channel.channel_id
 
-        if etag is not None:
+        if etag:
             print "Updating the DB based on etags"
+            print etag
+            print modified
+            print channel_id
+
             newest_feed = feedparser.parse(channel_url, etag=etag, modified=modified)
 
-            # checking if there are any items in the returned feed
             if newest_feed.status == 200:
+                print "newest status", newest_feed.status
+                print "newest etag", newest_feed.etag
+
                 load_db.load_podcasts(newest_feed, channel_id)
 
                 # updating the etag and modified values
-                # channel.channel_etag = newest_feed.etag
-                # channel.channel_modified = newest_feed.get("modified")
-
-                db.session.query(Channel).update({Channel.channel_etag: newest_feed.etag})
+                channel.channel_etag = newest_feed.etag
+                channel.channel_modified = newest_feed.get("modified")
 
                 db.session.commit()
+
+            else:
+                print "can't find etag"
+                print newest_feed.status
+
+        else:
+            print "no etag"
+
+            # newest_feed = feedparser.parse(channel_url, etag=etag, modified=modified)
+
+            # # checking if there are any items in the returned feed
+            # if newest_feed.status == 200:
+            #     print "newest status", newest_feed.status
+            #     print "newest etag", newest_feed.etag
+            #     load_db.load_podcasts(newest_feed, channel_id)
+
+            #     # updating the etag and modified values
+            #     channel.channel_etag = newest_feed.etag
+            #     channel.channel_modified = newest_feed.get("modified")
+
+            #     # db.session.query(Channel).update({Channel.channel_etag: newest_feed.etag})
+
+            #     db.session.commit()
         # elif modified:
         #     "updating db based on modified tag"
         #     newest_feed = feedparser.parse(channel_url, modified=modified)
