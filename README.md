@@ -14,3 +14,12 @@ Python, Flask, Flask Bcrypt, PostgreSQL, SQLAlchemy, AJAX, JSON, Jinja, Javascri
 <h6>APIs Used:</h6>
 
 Python Feedparser API
+
+
+<h6>How it works</h6>
+
+Signup Process
+
+![Podcastr Signup](/static/img/readme_imgs/signup.gif)
+
+<br><br>
