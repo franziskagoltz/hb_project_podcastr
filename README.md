@@ -20,6 +20,6 @@ Python Feedparser API
 
 Signup Process
 
-![Podcastr Signup](/static/img/readme_imgs/signup.gif)
+![Podcastr Signup](/static/imgs/readme_imgs/signup.gif)
 
 <br><br>
