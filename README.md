@@ -16,20 +16,20 @@ Python, Flask, Flask Bcrypt, PostgreSQL, SQLAlchemy, AJAX, JSON, Jinja, Javascri
 Python Feedparser API
 
 
-<h4>How it works</h4>
+<h4>How it works:</h4>
 
-<h6>Signup Process</h6>
+<h5>Signup Process</h5>
 
 ![Podcastr Signup](/static/imgs/readme_imgs/signup.gif)
 
 <br>
 
-<h6>Listen to podcasts by clicking on a category, skip or like specific episodes</h6>
+<h5>Listen to podcasts by clicking on a category, skip or like specific episodes</h5>
 
 ![Podcastr Listen](/static/imgs/readme_imgs/like_skip.gif)
 
 <br>
 
-<h6>View what podcasts you listened to and when + what episodes you liked and skipped</h6>
+<h5>View what podcasts you listened to and when + what episodes you liked and skipped</h5>
 
 ![Podcastr Userprofile](/static/imgs/readme_imgs/userprofile.gif)
