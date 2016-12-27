@@ -23,3 +23,7 @@ Signup Process
 ![Podcastr Signup](/static/imgs/readme_imgs/signup.gif)
 
 <br><br>
+
+Listen to podcasts by clicking on a category, skip or like specific episodes
+
+![Podcastr Listen](/static/imgs/readme_imgs/like_skip.gif)
