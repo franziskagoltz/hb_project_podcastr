@@ -27,3 +27,9 @@ Signup Process
 Listen to podcasts by clicking on a category, skip or like specific episodes
 
 ![Podcastr Listen](/static/imgs/readme_imgs/like_skip.gif)
+
+<br><br>
+
+View what podcasts you listened to and when + what episodes you liked and skipped 
+
+![Podcastr Userprofile](/static/imgs/readme_imgs/userprofile.gif)
